@@ -553,6 +553,15 @@ const Laporan = ({ dataForm, images }) => {
     </View>
   );
 
+  const today = new Date();
+  const options = {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  };
+
+  const formattedDate = today.toLocaleDateString("id-ID", options);
+
   return (
     <Document>
       <Page size="A4" style={styles.page} wrap>
@@ -623,7 +632,7 @@ const Laporan = ({ dataForm, images }) => {
                 paddingRight: 80,
               }}
             >
-              <Text>Aceh Besar, 06 Mei 2024</Text>
+              <Text>Aceh Besar, {formattedDate}</Text>
               <Text>Ketua Tim Teknisi</Text>
               <Image src={ttd1} style={{ width: 70 }} />
               <Text>Nizar Purnama, S.Kom.,M.T</Text>
