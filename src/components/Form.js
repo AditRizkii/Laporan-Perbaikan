@@ -127,7 +127,6 @@ const Form = () => {
         </p>
         <p className="text-gray-300">
           Lengkapi Form untuk Mengajukan Perbaikan Peralatan Anda.
-          <span className="text-red-500">(iya kah dit)</span>
         </p>
       </div>
       <div className="relative z-10 mt-12 mx-auto px-4 p-8 bg-slate-100 sm:max-w-lg md:max-w-xl lg:max-w-2xl sm:px-8 sm:rounded-xl shadow-xl">
