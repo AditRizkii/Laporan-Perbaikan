@@ -6,12 +6,30 @@ import {
   Page,
   Document,
   StyleSheet,
+  Font
 } from "@react-pdf/renderer";
 import logo from "./logo_bmkg.png";
 import ttd from "./ttd_footer.jpg";
 import ttd1 from "./ttd.png";
 
-const Laporan = ({ dataForm, images }) => {
+import FontArialRegular from "../fonts/arial-mt/ARIALMTMEDIUM.TTF"
+import FontArialBold from "../fonts/arial-mt/ARIALMTEXTRABOLD.TTF"
+
+Font.register({
+  family: 'Arial',
+  fonts: [
+    {
+      src: FontArialRegular,
+      fontWeight: 'normal',
+    },
+    {
+      src: FontArialBold,
+      fontWeight: 'bold',
+    }
+  ]
+})
+
+const Laporan = ({ dataForm, images , ttdImage}) => {
   const formatDate = () => {
     const date = new Date(dataForm.kegiatan[0].tglPelaksanaan);
     const options = {
@@ -36,6 +54,8 @@ const Laporan = ({ dataForm, images }) => {
       paddingRight: 40,
       lineHeight: 1.5,
       flexDirection: "column",
+      fontFamily: "Arial",
+      color: "black"
     },
 
     spaceBetween: {
@@ -112,6 +132,8 @@ const Laporan = ({ dataForm, images }) => {
       style={{
         flexDirection: "row",
         justifyContent: "center",
+        marginTop: "-19",
+        marginHorizontal: "-40",
         paddingTop: 10,
         paddingBottom: 10,
         backgroundColor: "#bfbfbf",
@@ -184,6 +206,7 @@ const Laporan = ({ dataForm, images }) => {
             <Text
               style={{
                 textAlign: "center",
+                fontWeight: "bold",
               }}
             >
               JI. Banda Aceh - Medan Km. 27,5 lndrapuri, Aceh Besar. Telp: 0811
@@ -192,6 +215,7 @@ const Laporan = ({ dataForm, images }) => {
             <Text
               style={{
                 textAlign: "center",
+                fontWeight: "bold",
               }}
             >
               E-Mail: staklim.aceh@bmkg.go.id
@@ -634,8 +658,10 @@ const Laporan = ({ dataForm, images }) => {
             >
               <Text>Aceh Besar, {formattedDate}</Text>
               <Text>Ketua Tim Teknisi</Text>
-              <Image src={ttd1} style={{ width: 70 }} />
-              <Text>Nizar Purnama, S.Kom.,M.T</Text>
+              <Image src={ttdImage[0]} style={{ width: 70, height:70 }} />
+              <Text style={{
+                textDecoration: "underline"
+              }}>Nizar Purnama, S.Kom.,M.T</Text>
               <Text>NIP. 198512232006041002</Text>
             </View>
           </View>

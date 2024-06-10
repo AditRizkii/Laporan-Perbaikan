@@ -65,6 +65,15 @@ const Form = () => {
     defaultValue: [{ imageData: "" }],
   });
 
+  const {
+    fields: ttdFields,
+    append: appendTTD,
+  } = useFieldArray({
+    control, // control props comes from useForm (optional: if you are using FormProvider)
+    name: "ttd", // unique name for your Field Array
+    defaultValue: [{ ttdData: "" }],
+  });
+
   const handleReset = () => {
     resetField("pelaksana");
   };
@@ -91,10 +100,11 @@ const Form = () => {
     //   console.error("Error uploading images:", error);
     // }
     console.log({ data });
-    navigate("/view-pdf", { state: { dataForm: data, images: filePreviews } });
+    navigate("/view-pdf", { state: { dataForm: data, images: filePreviews, ttdImage : ttd } });
   };
 
   const [filePreviews, setFilePreviews] = useState([]);
+  const [ttd, setTTD] = useState([]);
   const [formattedDate, setFormattedDate] = useState("");
 
   const formatSelectedDate = (date) => {
@@ -116,6 +126,12 @@ const Form = () => {
     const previews = Array.from(files).map((file) => URL.createObjectURL(file));
     setFilePreviews(previews);
     appendImages({ imageData: files });
+  };
+
+  const handleTTDChange = (files) => {
+    const previews = Array.from(files).map((file) => URL.createObjectURL(file));
+    setTTD(previews);
+    appendTTD({ ttdData: files });
   };
 
   return (
@@ -621,6 +637,30 @@ const Form = () => {
                 </div>
               ))}
             </div>
+          </div>
+
+          <div className="border-2 border-slate-300 bg-white rounded-lg px-6 py-5">
+            <h3 className="text-xl font-bold text-gray-800 mb-3 py-3">
+              Upload QR Tanda Tangan
+            </h3>
+            <Controller
+              control={control}
+              name="ttd"
+              render={({ field: { onChange } }) => (
+                <input
+                  type="file"
+                  className="text-gray-400 font-medium border w-full"
+                  accept="image/*"
+                  multiple
+                  onChange={(e) => {
+                    const files = e.target.files;
+                    handleTTDChange(files);
+                    onChange(files);
+                  }}
+                />
+              )}
+            />
+            
           </div>
           <button
             type="submit"
