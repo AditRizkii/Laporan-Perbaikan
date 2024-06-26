@@ -6,7 +6,6 @@ const PdfPreview = () => {
   const location = useLocation();
   const { dataForm } = location.state || {};
   const { images } = location.state || {};
-  const { ttdImage } = location.state || {};
   const cards = {
     maxWidth: "2000px",
     justifyContent: "center",
@@ -38,7 +37,6 @@ const PdfPreview = () => {
             total={dataCard}
             dataForm={dataForm}
             images={images}
-            ttdImage={ttdImage}
           />
         </div>
       </div>

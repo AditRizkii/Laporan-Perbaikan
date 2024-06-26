@@ -6,7 +6,7 @@ import { BlobProvider, PDFDownloadLink } from "@react-pdf/renderer";
 import { saveAs } from "file-saver";
 import Laporan from "./Laporan";
 
-const PdfCard = ({ title, total, dataForm, images, ttdImage }) => {
+const PdfCard = ({ title, total, dataForm, images }) => {
   const styles = {
     container: {
       borderRadius: "5px",
@@ -65,7 +65,7 @@ const PdfCard = ({ title, total, dataForm, images, ttdImage }) => {
           </a>
         </div>
         <PDFDownloadLink
-          document={<Laporan dataForm={dataForm} images={images} ttdImage={ttdImage}/>}
+          document={<Laporan dataForm={dataForm} images={images} />}
           fileName={`${title}.pdf`}
         >
           <div style={styles.btn}>
@@ -75,7 +75,7 @@ const PdfCard = ({ title, total, dataForm, images, ttdImage }) => {
         </PDFDownloadLink>
 
         <BlobProvider
-          document={<Laporan dataForm={dataForm} images={images} ttdImage={ttdImage}/>}
+          document={<Laporan dataForm={dataForm} images={images} />}
         >
           {({ url, blob }) => (
             <a

@@ -10,7 +10,7 @@ import {
 } from "@react-pdf/renderer";
 import logo from "./logo_bmkg.png";
 import ttd from "./ttd_footer.jpg";
-import ttd1 from "./ttd.png";
+
 
 import FontArialRegular from "../fonts/arial-mt/ARIALMTMEDIUM.TTF"
 import FontArialBold from "../fonts/arial-mt/ARIALMTEXTRABOLD.TTF"
@@ -29,8 +29,9 @@ Font.register({
   ]
 })
 
-const Laporan = ({ dataForm, images , ttdImage}) => {
+const Laporan = ({ dataForm, images }) => {
   const formatDate = () => {
+    // console.log(dataForm.tglCetak[0].data);
     const date = new Date(dataForm.kegiatan[0].tglPelaksanaan);
     const options = {
       weekday: "long",
@@ -577,14 +578,20 @@ const Laporan = ({ dataForm, images , ttdImage}) => {
     </View>
   );
 
-  const today = new Date();
-  const options = {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  };
+  const formattglCetak = () => {
+    const date = new Date(dataForm.tglCetak[0].data);
+    const options = {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    };
 
-  const formattedDate = today.toLocaleDateString("id-ID", options);
+    const formatted = new Intl.DateTimeFormat("id-ID", options)
+    .format(date)
+    .replace(/\//g, " ");
+
+    return formatted;
+  };
 
   return (
     <Document>
@@ -656,9 +663,9 @@ const Laporan = ({ dataForm, images , ttdImage}) => {
                 paddingRight: 80,
               }}
             >
-              <Text>Aceh Besar, {formattedDate}</Text>
+              <Text>Aceh Besar, {formattglCetak(dataForm.tglCetak[0].data)}</Text>
               <Text>Ketua Tim Teknisi</Text>
-              <Image src={ttdImage[0]} style={{ width: 70, height:70 }} />
+              <View style={{ width: 70, height:70 }}></View>
               <Text style={{
                 textDecoration: "underline"
               }}>Nizar Purnama, S.Kom.,M.T</Text>
@@ -683,7 +690,7 @@ const Laporan = ({ dataForm, images , ttdImage}) => {
               fontWeight: "extrabold",
             }}
           >
-            Dokumentasi Perbaikan PM 2.5
+            Dokumentasi Perbaikan {`${dataForm.alat[0].nama}`}
           </Text>
           <View
             style={{

@@ -66,12 +66,13 @@ const Form = () => {
   });
 
   const {
-    fields: ttdFields,
-    append: appendTTD,
+    fields: tglCetakFields,
+    append: appendTglCetak,
+    remove: removeTglCetak,
   } = useFieldArray({
     control, // control props comes from useForm (optional: if you are using FormProvider)
-    name: "ttd", // unique name for your Field Array
-    defaultValue: [{ ttdData: "" }],
+    name: "tglCetak", // unique name for your Field Array
+    defaultValue: [{ data: "" }],
   });
 
   const handleReset = () => {
@@ -100,12 +101,12 @@ const Form = () => {
     //   console.error("Error uploading images:", error);
     // }
     console.log({ data });
-    navigate("/view-pdf", { state: { dataForm: data, images: filePreviews, ttdImage : ttd } });
+    navigate("/view-pdf", { state: { dataForm: data, images: filePreviews } });
   };
 
   const [filePreviews, setFilePreviews] = useState([]);
-  const [ttd, setTTD] = useState([]);
   const [formattedDate, setFormattedDate] = useState("");
+  const [tglCetak, setTglCetak] = useState("");
 
   const formatSelectedDate = (date) => {
     const options = {
@@ -128,11 +129,6 @@ const Form = () => {
     appendImages({ imageData: files });
   };
 
-  const handleTTDChange = (files) => {
-    const previews = Array.from(files).map((file) => URL.createObjectURL(file));
-    setTTD(previews);
-    appendTTD({ ttdData: files });
-  };
 
   return (
     <div className="relative w-full h-full py-28 justify-center items-center bg-gray-900">
@@ -640,27 +636,42 @@ const Form = () => {
           </div>
 
           <div className="border-2 border-slate-300 bg-white rounded-lg px-6 py-5">
-            <h3 className="text-xl font-bold text-gray-800 mb-3 py-3">
-              Upload QR Tanda Tangan
+            <h3 className="md:text-xl font-bold text-gray-800 py-3">
+            Tanggal Cetak Laporan Perbaikan
             </h3>
-            <Controller
-              control={control}
-              name="ttd"
-              render={({ field: { onChange } }) => (
-                <input
-                  type="file"
-                  className="text-gray-400 font-medium border w-full"
-                  accept="image/*"
-                  multiple
-                  onChange={(e) => {
-                    const files = e.target.files;
-                    handleTTDChange(files);
-                    onChange(files);
+            <div>
+              <div className="flex flex-col md:flex-row gap-5">
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 5,
                   }}
-                />
-              )}
-            />
-            
+                  className=" w-full md:w-1/2 lg:w-2/3"
+                >
+                  <input
+                    type="date"
+                    {...register("tglCetak.0.data")}
+                    style={{
+                      paddingTop: "4px",
+                      paddingBottom: "4px",
+                      border: "0",
+                      borderRadius: "5px",
+                    }}
+                    className="p-2 w-full"
+                    onChange={(e) => {
+                      const date = new Date(e.target.value);
+                      setTglCetak(formatSelectedDate(date));
+                    }}
+                    required
+                  />
+                </div>
+
+                <p className="flex items-end justify-start md:justify-end md:p-2 text-blue-800 font-semibold">
+                  {tglCetak}
+                </p>
+              </div>
+            </div>
           </div>
           <button
             type="submit"
