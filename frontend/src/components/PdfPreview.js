@@ -24,7 +24,7 @@ const PdfPreview = () => {
   console.log({ dataForm, images });
   return (
     <div className="relative w-full h-full bg-gray-900">
-      <div className="grid place-content-center h-screen">
+      <div className="flex flex-col gap-4 place-content-center h-screen">
         <h2
           style={{ textAlign: "center" }}
           className="relative z-10 text-xl md:text-3xl text-white pb-2 md:pb-10 lg:pb-20 font-bold"

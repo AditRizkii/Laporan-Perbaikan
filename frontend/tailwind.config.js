@@ -5,7 +5,11 @@ module.exports = {
     "./node_modules/flowbite-react/dist/esm/**/*.js",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        Poppins: ["Poppins"],
+      },
+    },
   },
   plugins: [require("flowbite/plugin")],
 };

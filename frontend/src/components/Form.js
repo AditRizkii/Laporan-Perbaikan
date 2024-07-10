@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useForm, Controller, useFieldArray } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Form = () => {
   const { register, handleSubmit, resetField, control } = useForm();
@@ -132,6 +132,9 @@ const Form = () => {
 
   return (
     <div className="relative w-full h-full py-28 justify-center items-center bg-gray-900">
+      <div className="w-full justify-end text-end text-white pr-6">
+        <Link to="/login" className="bg-blue-800 py-2 px-4 rounded-full visited:text-white text-white hover:text-white">Halaman Admin</Link>
+      </div>
       <div className="relative z-10 max-w-lg space-y-3 px-4 sm:mx-auto sm:text-center sm:px-0">
         <h3 className="text-cyan-400 font-semibold">Formulir</h3>
         <p className="text-white text-2xl font-semibold sm:text-4xl">

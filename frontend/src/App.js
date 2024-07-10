@@ -2,6 +2,10 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import PdfCard from "./pdf/PdfCard";
 import Form from "./components/Form";
 import PdfPreview from "./components/PdfPreview";
+import Login from "./components/Login";
+import Forbidden from "./pages/Forbidden";
+import Dashboard from "./pages/Dashboard";
+import AddConstant from "./pages/AddConstant";
 
 const Main = () => {
   const cards = {
@@ -32,7 +36,13 @@ function App() {
       <Routes>
         {/* <Route path="/" exact element={<Main />} /> */}
         <Route path="/" element={<Form />} />
+        <Route path="/login" element={<Login />} />
+        {/* <Route path="/admin" element={<Form />} /> */}
         <Route path="/view-pdf" element={<PdfPreview />} />
+        <Route path="/forbidden" element={<Forbidden />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        
+        <Route path="/constants/add" element={<AddConstant />} />
       </Routes>
     </BrowserRouter>
   );

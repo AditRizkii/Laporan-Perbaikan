@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {
   Image,
   Text,
@@ -10,6 +10,7 @@ import {
 } from "@react-pdf/renderer";
 import logo from "./logo_bmkg.png";
 import ttd from "./ttd_footer.jpg";
+import axios from "axios";
 
 
 import FontArialRegular from "../fonts/arial-mt/ARIALMTMEDIUM.TTF"
@@ -30,6 +31,31 @@ Font.register({
 })
 
 const Laporan = ({ dataForm, images }) => {
+  const [constants, setConstants] = useState([]);
+  useEffect(() => {
+    getConstants();
+  }, []);
+  const getConstants = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/constants");
+      setConstants(response.data);
+    } catch (error) {
+      console.error("Error fetching constants:", error);
+    }
+  };
+
+  const getValueByName = (name) => {
+    const item = constants.find((obj) => obj.name === name);
+    return item ? item.value : null;
+  };
+
+  const ketuaTim = getValueByName("KETUA_TIM_TEKNISI");
+  const nipKetuaTim = getValueByName("NIP_KETUA_TIM_TEKNISI");
+  const namaKantor = getValueByName("NAMA_KANTOR");
+  const email = getValueByName("EMAIL");
+  const telepon = getValueByName("TELEPON");
+
+
   const formatDate = () => {
     // console.log(dataForm.tglCetak[0].data);
     const date = new Date(dataForm.kegiatan[0].tglPelaksanaan);
@@ -193,7 +219,7 @@ const Laporan = ({ dataForm, images }) => {
                 fontWeight: "bold",
               }}
             >
-              STASIUN KLIMATOLOGI ACEH
+              { namaKantor }
             </Text>
           </View>
           <View
@@ -210,8 +236,7 @@ const Laporan = ({ dataForm, images }) => {
                 fontWeight: "bold",
               }}
             >
-              JI. Banda Aceh - Medan Km. 27,5 lndrapuri, Aceh Besar. Telp: 0811
-              6815162
+              JI. Banda Aceh - Medan Km. 27,5 lndrapuri, Aceh Besar. Telp: {telepon}
             </Text>
             <Text
               style={{
@@ -219,7 +244,7 @@ const Laporan = ({ dataForm, images }) => {
                 fontWeight: "bold",
               }}
             >
-              E-Mail: staklim.aceh@bmkg.go.id
+              E-Mail: {email}
             </Text>
           </View>
         </View>
@@ -536,14 +561,15 @@ const Laporan = ({ dataForm, images }) => {
         <View
           style={{
             marginRight: 10,
+            width:35,
           }}
         >
-          <Image
+          {/* <Image
             style={{
               width: 35,
             }}
             src={ttd}
-          />
+          /> */}
         </View>
         <View
           style={{
@@ -668,8 +694,8 @@ const Laporan = ({ dataForm, images }) => {
               <View style={{ width: 70, height:70 }}></View>
               <Text style={{
                 textDecoration: "underline"
-              }}>Nizar Purnama, S.Kom.,M.T</Text>
-              <Text>NIP. 198512232006041002</Text>
+              }}>{ketuaTim}</Text>
+              <Text>NIP. {nipKetuaTim}</Text>
             </View>
           </View>
         </View>
